@@ -1,0 +1,97 @@
+[
+  {
+    "original_message": "I was charged twice for my subscription this month!",
+    "intent": "billing",
+    "confidence": 0.9,
+    "reasoning": "The customer is inquiring about a billing issue related to being charged twice for their subscription.",
+    "sentiment": "negative",
+    "urgency": "medium",
+    "emotion": "frustrated",
+    "specialized_data": {
+      "issue_type": "charge_dispute",
+      "amount_mentioned": "none",
+      "urgency": "medium",
+      "recommended_action": "Investigate the duplicate charges, verify with the customer, and process a refund for the extra charge if necessary."
+    },
+    "should_escalate": false,
+    "response": "\"I'm sorry to hear about the double charge on your subscription this month. I understand how frustrating that must be. To resolve this issue, please provide me with your account details so I can investigate and process a refund for the extra charge. Thank you for bringing this to our attention, and we'll work to rectify it promptly.\""
+  },
+  {
+    "original_message": "The app keeps crashing whenever I try to upload a file.",
+    "intent": "technical_support",
+    "confidence": 0.9,
+    "reasoning": "The customer is reporting a technical issue with the app crashing, indicating a need for technical support.",
+    "sentiment": "negative",
+    "urgency": "medium",
+    "emotion": "frustrated",
+    "specialized_data": {
+      "category": "performance",
+      "severity": "medium",
+      "self_service_possible": "no",
+      "suggested_kb_article": "\"Troubleshooting App Crashes During File Uploads\"",
+      "escalate_to_engineering": "no"
+    },
+    "should_escalate": false,
+    "response": "I'm sorry to hear that you're experiencing issues with the app crashing when trying to upload a file. This can be frustrating. To address this technical issue, I recommend trying to update the app to the latest version or clearing the app's cache and data. If the problem persists, please reach out to our support team for further assistance. Thank you for your patience."
+  },
+  {
+    "original_message": "How do I reset my password?",
+    "intent": "account_management",
+    "confidence": 1.0,
+    "reasoning": "The customer is asking about resetting a password, which falls under account management.",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "neutral",
+    "specialized_data": {},
+    "should_escalate": false,
+    "response": "I understand your need to reset your password. To do so, please visit the login page of your account and look for the \"Forgot Password\" option. Follow the prompts to reset your password securely. If you encounter any difficulties, feel free to reach out to us for further assistance."
+  },
+  {
+    "original_message": "I want to cancel my account immediately.",
+    "intent": "cancellation",
+    "confidence": 1.0,
+    "reasoning": "The customer explicitly states the desire to cancel their account.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "frustrated",
+    "specialized_data": {},
+    "should_escalate": false,
+    "response": "I understand your request to cancel your account immediately. I will assist you with this process. Please provide me with your account details so I can proceed with the cancellation. Thank you for reaching out."
+  },
+  {
+    "original_message": "I've been waiting for 3 days and nobody has helped me. This is ridiculous!",
+    "intent": "complaint",
+    "confidence": 0.9,
+    "reasoning": "The customer's message expresses dissatisfaction and frustration, indicating a complaint.",
+    "sentiment": "very_negative",
+    "urgency": "high",
+    "emotion": "frustrated",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "\"I apologize for the delay in assisting you. I understand your frustration, and I'm here to help resolve your issue promptly. Please provide me with the details of your concern so I can assist you further. Your satisfaction is important to us, and we will do our best to make things right.\""
+  },
+  {
+    "original_message": "Can you tell me about your enterprise pricing?",
+    "intent": "general_inquiry",
+    "confidence": 0.9,
+    "reasoning": "The customer is asking for information about pricing, which falls under general questions about products or services.",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "curious",
+    "specialized_data": {},
+    "should_escalate": false,
+    "response": "Thank you for reaching out! Our enterprise pricing varies based on the specific needs of your business. To get detailed information tailored to your requirements, I recommend scheduling a consultation with our sales team. They will be able to provide you with a customized quote and answer any questions you may have. Please let me know if you would like assistance in setting up a meeting with them."
+  },
+  {
+    "original_message": "I need to speak with a manager right now.",
+    "intent": "escalation",
+    "confidence": 1.0,
+    "reasoning": "The customer explicitly requests to speak with a manager, indicating an escalation intent.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "frustrated",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I understand your need to speak with a manager urgently. Please provide me with more details about the issue so I can assist you further or escalate it to the appropriate team. Your concern is important to us, and we will work to resolve it promptly."
+  }
+]

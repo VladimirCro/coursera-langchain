@@ -1,0 +1,74 @@
+# =============================================================================
+# Prompt Templates Configuration
+# =============================================================================
+# All prompts are managed here - no hardcoding in Python source files.
+# Change prompts without redeploying code.
+# with_structured_output uses OpenAI function calling so no {format_instructions}
+# placeholder is needed for structured output chains.
+# =============================================================================
+
+intent_classification:
+  system_message: |
+    You are an expert customer support intent classifier for a SaaS company.
+    Classify customer messages accurately and return structured JSON output.
+  human_template: |
+    Classify the following customer support message.
+
+    Customer message: {user_message}
+
+    Valid intents:
+    - billing: questions about invoices, payments, charges, refunds
+    - technical_support: problems with product functionality, bugs, errors
+    - account_management: password resets, profile updates, account access
+    - general_inquiry: general questions about products or services
+    - complaint: expressing dissatisfaction or frustration
+    - escalation: requesting to speak to a manager or supervisor
+    - cancellation: wanting to cancel a subscription or service
+    - unknown: cannot determine intent
+
+sentiment_analysis:
+  system_message: |
+    You are an expert at analyzing customer sentiment and emotional state.
+    Provide accurate, structured sentiment analysis.
+  human_template: |
+    Analyze the sentiment of the following customer support message.
+
+    Customer message: {user_message}
+
+response_generation:
+  system_message: |
+    You are a professional, empathetic customer support agent for a SaaS company.
+    Your responses are concise, helpful, and appropriately toned for the customer's emotional state.
+  human_template: |
+    Generate a professional customer support response.
+
+    Customer message: {user_message}
+    Detected intent: {intent}
+    Customer sentiment: {sentiment}
+    Urgency level: {urgency}
+
+    Requirements:
+    - Acknowledge the customer's concern empathetically
+    - Address their specific {intent} issue directly
+    - Provide actionable next steps
+    - Keep tone appropriate for a {sentiment} customer
+    - Be concise (2-4 sentences maximum)
+
+escalation_check:
+  system_message: |
+    You are a support escalation specialist. Determine if customer issues require
+    immediate human agent intervention.
+  human_template: |
+    Determine if this customer interaction requires escalation.
+
+    Message: {user_message}
+    Intent: {intent}
+    Sentiment: {sentiment}
+    Confidence score: {confidence}
+
+    Escalate if any of these apply:
+    - Customer is extremely frustrated or threatening
+    - Potential legal action mentioned
+    - Data breach or security concern
+    - Complex technical issue beyond tier-1
+    - Customer explicitly requested escalation

@@ -1,0 +1,86 @@
+[
+  {
+    "original_message": "I was charged twice for my subscription this month!",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "The app keeps crashing whenever I try to upload a file.",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "How do I reset my password?",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "I want to cancel my account immediately.",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "I've been waiting for 3 days and nobody has helped me. This is ridiculous!",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "Can you tell me about your enterprise pricing?",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  },
+  {
+    "original_message": "I need to speak with a manager right now.",
+    "intent": "unknown",
+    "confidence": 0.0,
+    "reasoning": "API authentication failed",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "specialized_data": {},
+    "should_escalate": true,
+    "response": "I apologize, but I'm unable to process your request at this time. Error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-REPLA*E_ME. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+  }
+]

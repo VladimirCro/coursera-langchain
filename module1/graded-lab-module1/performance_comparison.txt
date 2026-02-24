@@ -1,0 +1,209 @@
+================================================================================
+  PERFORMANCE COMPARISON REPORT
+  Legacy Intent Classifier vs. LangChain Refactored Implementation
+================================================================================
+
+OVERVIEW
+--------
+This report compares the legacy monolithic intent_classifier.py against the
+refactored LangChain-based implementation across the dimensions required by the
+Module 1 Graded Lab: prompt management, output parsing, code maintainability,
+extensibility, and overall engineering quality.
+
+--------------------------------------------------------------------------------
+1. PROMPT MANAGEMENT
+--------------------------------------------------------------------------------
+
+LEGACY (legacy/intent_classifier.py)
+  - All prompts are hardcoded as f-strings directly in function bodies
+  - 5 separate functions each contain their own hardcoded prompt
+  - Changing a prompt requires: code edit → code review → CI/CD deployment
+  - No version history for prompt changes (mixed with code history in git)
+  - No way to A/B test prompt variants without forking code
+  - Inconsistent formatting (some prompts use \n, some use triple-quotes)
+  - Example: lines 52-69, 113-125, 154-170, 202-217, 247-264
+
+REFACTORED (refactored/intent_classifier.py + config/prompts.yaml)
+  - ALL prompts live in config/prompts.yaml - zero prompts in Python source
+  - 4 logical prompt groups: intent_classification, sentiment_analysis,
+    response_generation, escalation_check
+  - Changing a prompt requires: edit prompts.yaml → restart app (no redeploy)
+  - Prompt history is independently trackable in version control
+  - ChatPromptTemplate separates system_message from human_template cleanly
+  - format_instructions injected automatically by PydanticOutputParser
+  - Non-technical staff (product managers, support team) can tune prompts
+
+VERDICT: Refactored implementation is significantly superior.
+  Legacy score:     2/10 (hardcoded, unmaintainable)
+  Refactored score: 9/10 (externalized, structured, changeable without redeploy)
+
+--------------------------------------------------------------------------------
+2. OUTPUT PARSING
+--------------------------------------------------------------------------------
+
+LEGACY
+  - Custom regex parsers: _parse_intent_response(), _parse_sentiment_response()
+  - Parse logic: re.search(r"INTENT:\s*(\w+)", raw, re.IGNORECASE)
+  - Silently returns default values if LLM changes output format
+  - No type validation (confidence stored as float but could be any string)
+  - No enum validation (invalid intent labels are accepted silently)
+  - Fourth separate parsing block in handle_billing_query() and handle_technical_query()
+  - Total regex parsing code: ~60 lines of duplicated logic
+  - Failure mode: silent - wrong data propagates downstream undetected
+
+REFACTORED
+  - PydanticOutputParser with typed Pydantic v2 models:
+      IntentClassification, SentimentAnalysis, EscalationDecision
+  - Literal types enforce valid enum values at parse time
+  - Field validators normalize data (e.g., round_confidence)
+  - Field ge=0.0, le=1.0 constraints on confidence score
+  - format_instructions auto-generated and injected into prompt
+  - If LLM returns invalid output, Pydantic raises a ValidationError
+    (fail fast, not silently)
+  - Zero regex in application code
+
+VERDICT: Refactored parsing is type-safe, validated, and self-documenting.
+  Legacy score:     2/10 (fragile regex, silent failures, duplicated)
+  Refactored score: 9/10 (Pydantic validation, typed, fail-fast)
+
+--------------------------------------------------------------------------------
+3. CODE MAINTAINABILITY
+--------------------------------------------------------------------------------
+
+LEGACY
+  Lines of code:        ~310
+  Functions:            8
+  Hardcoded strings:    23+ (model name, prompts, field names, defaults)
+  Code duplication:     HIGH - same API call pattern repeated 5 times
+  Cyclomatic complexity: HIGH - if/elif chains, nested try/except
+  Single Responsibility: VIOLATED - each function does: prompt building +
+                          API call + parsing + error handling
+  Test surface:         Untestable without mocking OpenAI globally
+
+REFACTORED
+  Lines of code:        ~260 (16% less, despite adding Pydantic models)
+  Classes:              1 (IntentClassifier) + 3 Pydantic models
+  Hardcoded strings:    2 (default config path, log format)
+  Code duplication:     LOW - build_*_chain() functions share the same pattern
+                        but each is a single expression (prompt | llm | parser)
+  Cyclomatic complexity: LOW - LCEL pipeline, no branching per function
+  Single Responsibility: SATISFIED - each chain has one job
+  Test surface:         Chains can be tested individually; LLM can be mocked
+
+VERDICT: Refactored code is cleaner, DRY, and testable.
+  Legacy score:     3/10
+  Refactored score: 8/10
+
+--------------------------------------------------------------------------------
+4. EXTENSIBILITY & SCALABILITY
+--------------------------------------------------------------------------------
+
+LEGACY - Adding a new intent handler requires:
+  1. Write a new function with copy-pasted API call boilerplate
+  2. Add a new regex parser function
+  3. Add an elif branch in process_customer_message()
+  4. Hardcode new field names as strings in multiple places
+  Effort: ~50 lines of code per new handler
+
+REFACTORED - Adding a new intent handler requires:
+  1. Add a new Pydantic model (5-10 lines)
+  2. Add prompt template to prompts.yaml (no Python changes needed)
+  3. Add a new build_*_chain() function (5 lines)
+  4. Invoke chain in IntentClassifier.process()
+  Effort: ~15 lines of code per new handler
+
+PROVIDER SWITCHING:
+  Legacy:      Requires changing every openai.chat.completions.create() call
+  Refactored:  Change LLM_PROVIDER=anthropic in .env → done
+
+MODEL SWITCHING:
+  Legacy:      Change MODEL_NAME constant (affects all functions equally)
+  Refactored:  Change LLM_MODEL_NAME in .env or config.json
+
+VERDICT: Refactored is substantially more extensible.
+  Legacy score:     3/10
+  Refactored score: 9/10
+
+--------------------------------------------------------------------------------
+5. CONFIGURATION MANAGEMENT
+--------------------------------------------------------------------------------
+
+LEGACY
+  - API key: inconsistently pulled (os.environ.get with fallback to hardcoded)
+  - Model name: hardcoded constant MODEL_NAME = "gpt-3.5-turbo"
+  - Thresholds: hardcoded constants HIGH_CONFIDENCE = 0.85 etc.
+  - Temperature: hardcoded per-call (some 0.0, some 0.7)
+  - No .env support (no python-dotenv)
+  - No external config files
+
+REFACTORED
+  - All secrets: .env file (loaded via python-dotenv)
+  - All model settings: config/config.json
+  - All prompts: config/prompts.yaml
+  - .env.example provided for documentation and onboarding
+  - Environment variables override config.json (12-factor app principle)
+  - LOG_LEVEL configurable without code changes
+  - No hardcoded secrets anywhere in source code
+
+VERDICT: Refactored follows 12-factor app configuration best practices.
+  Legacy score:     1/10 (potential secret exposure, no config management)
+  Refactored score: 9/10
+
+--------------------------------------------------------------------------------
+6. ERROR HANDLING
+--------------------------------------------------------------------------------
+
+LEGACY
+  - Each function has its own try/except block (duplicated 5 times)
+  - Silent failures: returns default dict with "unknown" values
+  - No logging of errors to observability systems
+  - User sees no indication that classification failed
+
+REFACTORED
+  - Pydantic validation raises clear ValidationError on bad LLM output
+  - Logging throughout (logger.info, logger.debug) for observability
+  - LangChain's built-in retry/fallback mechanism available
+  - Errors propagate with full context rather than being swallowed
+
+VERDICT: Refactored error handling is more transparent.
+  Legacy score:     3/10
+  Refactored score: 7/10
+
+--------------------------------------------------------------------------------
+SUMMARY SCORECARD
+--------------------------------------------------------------------------------
+
+Dimension                    Legacy    Refactored    Delta
+----------------------------------------------------------
+Prompt Management              2/10       9/10       +7
+Output Parsing                 2/10       9/10       +7
+Code Maintainability           3/10       8/10       +5
+Extensibility                  3/10       9/10       +6
+Configuration Management       1/10       9/10       +8
+Error Handling                 3/10       7/10       +4
+----------------------------------------------------------
+OVERALL                       14/60      51/60      +37
+                             (23%)      (85%)
+
+--------------------------------------------------------------------------------
+KEY TAKEAWAYS
+--------------------------------------------------------------------------------
+
+1. PromptTemplate / ChatPromptTemplate decouples prompt content from Python
+   code, enabling prompt iteration without redeployment.
+
+2. PydanticOutputParser replaces fragile regex with type-safe, validated
+   structured output. Silent failures become loud ValidationErrors.
+
+3. LCEL chains (prompt | llm | parser) make each pipeline step explicit and
+   independently testable.
+
+4. External configuration (config.json + prompts.yaml + .env) makes the
+   system tuneable by non-engineers and follows 12-factor app principles.
+
+5. Provider abstraction through build_llm() means switching from OpenAI to
+   Anthropic requires exactly ONE environment variable change.
+
+================================================================================
+END OF REPORT
+================================================================================

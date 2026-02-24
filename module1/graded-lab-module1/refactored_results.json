@@ -1,0 +1,86 @@
+[
+  {
+    "original_message": "I was charged twice for my subscription this month!",
+    "intent": "billing",
+    "confidence": 0.9,
+    "reasoning": "The customer is reporting an issue related to being charged twice, which falls under billing inquiries.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "calm",
+    "should_escalate": true,
+    "escalation_reason": "The customer is experiencing a billing issue with double charges, which can lead to frustration and requires immediate attention from a human agent to resolve.",
+    "response": "I\u2019m really sorry to hear about the double charge on your subscription this month; I completely understand how frustrating that must be. I\u2019ll help resolve this right away. Please check your email for a confirmation of both charges, and let me know the details so I can assist you in getting a refund for the duplicate charge. Thank you for your patience!"
+  },
+  {
+    "original_message": "The app keeps crashing whenever I try to upload a file.",
+    "intent": "technical_support",
+    "confidence": 0.95,
+    "reasoning": "The customer is experiencing a problem with the app crashing, which indicates a technical issue.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "calm",
+    "should_escalate": true,
+    "escalation_reason": "The app crashing during file uploads indicates a complex technical issue that may require deeper investigation beyond tier-1 support.",
+    "response": "I\u2019m really sorry to hear that the app is crashing when you try to upload a file; I understand how frustrating this can be. To help resolve this issue quickly, please try clearing your app cache or reinstalling the app. If the problem persists, please let me know the file type and size you\u2019re trying to upload, and I\u2019ll assist you further."
+  },
+  {
+    "original_message": "How do I reset my password?",
+    "intent": "account_management",
+    "confidence": 0.95,
+    "reasoning": "The customer is asking about resetting their password, which falls under account management.",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "should_escalate": false,
+    "escalation_reason": "The customer is asking a standard account management question about resetting their password, which does not indicate any frustration, legal concerns, or complex issues.",
+    "response": "Thank you for reaching out! To reset your password, please go to the login page and click on the \"Forgot Password?\" link. Follow the prompts to receive an email with instructions for creating a new password. If you need any further assistance, feel free to ask!"
+  },
+  {
+    "original_message": "I want to cancel my account immediately.",
+    "intent": "cancellation",
+    "confidence": 0.95,
+    "reasoning": "The customer explicitly states a desire to cancel their account, which directly aligns with the cancellation intent.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "calm",
+    "should_escalate": false,
+    "escalation_reason": "The customer is expressing a desire to cancel their account, but there are no indications of extreme frustration, threats, or other critical issues that would necessitate immediate human intervention.",
+    "response": "I\u2019m sorry to hear that you want to cancel your account, and I understand how frustrating this situation can be. To proceed with the cancellation, please confirm your request, and I will take care of it right away. If there\u2019s anything specific that led to your decision, I\u2019m here to listen and assist if you\u2019d like."
+  },
+  {
+    "original_message": "I've been waiting for 3 days and nobody has helped me. This is ridiculous!",
+    "intent": "escalation",
+    "confidence": 0.85,
+    "reasoning": "The customer is expressing frustration about a lack of assistance and is likely seeking to escalate the issue.",
+    "sentiment": "very_negative",
+    "urgency": "high",
+    "emotion": "calm",
+    "should_escalate": true,
+    "escalation_reason": "Auto-escalated based on intent/sentiment/confidence rules.",
+    "response": "I sincerely apologize for the frustration you've experienced and understand how important this issue is for you. I will escalate your case immediately and ensure that a dedicated team member reaches out to you within the next 24 hours. Thank you for your patience, and we are committed to resolving this for you as quickly as possible."
+  },
+  {
+    "original_message": "Can you tell me about your enterprise pricing?",
+    "intent": "billing",
+    "confidence": 0.85,
+    "reasoning": "The customer is inquiring about pricing, which relates to billing and payment information.",
+    "sentiment": "neutral",
+    "urgency": "low",
+    "emotion": "calm",
+    "should_escalate": false,
+    "escalation_reason": "The customer inquiry is about enterprise pricing, which is a standard billing question and does not indicate any frustration, legal concerns, or complex issues.",
+    "response": "Thank you for reaching out about our enterprise pricing. I\u2019d be happy to assist you with that information. Please visit our pricing page on our website for detailed options, or let me know if you\u2019d like to schedule a call to discuss your specific needs further."
+  },
+  {
+    "original_message": "I need to speak with a manager right now.",
+    "intent": "escalation",
+    "confidence": 0.95,
+    "reasoning": "The customer is explicitly requesting to speak with a manager, indicating a need for escalation.",
+    "sentiment": "negative",
+    "urgency": "high",
+    "emotion": "calm",
+    "should_escalate": true,
+    "escalation_reason": "Auto-escalated based on intent/sentiment/confidence rules.",
+    "response": "I understand that you're feeling frustrated, and I truly apologize for any inconvenience you've experienced. I will escalate your issue immediately and ensure that a manager gets in touch with you right away. Please provide your contact information, or let me know the best way to reach you, and we'll prioritize your request. Thank you for your patience."
+  }
+]
