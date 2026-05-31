@@ -1,0 +1,70 @@
+# Frequently Asked Questions (FAQ)
+
+## Account Management
+
+### How do I upgrade my account?
+You can upgrade from your account settings page. Go to Settings > Billing > Change Plan. Upgrades take effect immediately and you'll only pay the prorated difference.
+
+### Can I cancel anytime?
+Yes! You can cancel your subscription at any time. Your access continues until the end of your current billing period. No cancellation fees.
+
+### What happens to my data if I cancel?
+Your data is retained for 30 days after cancellation. You can export all your data before canceling or re-subscribe within 30 days to restore full access.
+
+## Billing and Payments
+
+### What payment methods do you accept?
+We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and wire transfer for annual enterprise plans.
+
+### Can I get an invoice?
+Yes! Invoices are automatically sent to your billing email after each payment. You can also download invoices from Settings > Billing > Invoice History.
+
+### Do you offer discounts?
+- Annual plans: 15% discount compared to monthly
+- Educational institutions: 25% discount (verification required)
+- Non-profits: 30% discount (501(c)(3) verification required)
+- Teams of 50+: Volume discounts available - contact sales
+
+## Technical Support
+
+### What are your support hours?
+- Email support: 24/7 for all plans
+- Live chat: Mon-Fri 9am-6pm EST for Premium and Enterprise
+- Phone support: Enterprise plans only, Mon-Fri 8am-8pm EST
+
+### How quickly do you respond to support tickets?
+- Free plan: Within 48 hours
+- Basic plan: Within 24 hours
+- Premium plan: Within 4 hours
+- Enterprise plan: Within 1 hour
+
+### Do you offer implementation assistance?
+Yes! Premium and Enterprise plans include onboarding assistance. Enterprise plans also include dedicated account management and quarterly business reviews.
+
+## Features and Usage
+
+### Is there a file size limit?
+- Free plan: 100MB per file
+- Basic plan: 500MB per file
+- Premium plan: 10GB per file
+- Enterprise plan: Unlimited
+
+### How many team members can I add?
+- Free plan: Just you (single user)
+- Basic plan: Up to 5 team members
+- Premium plan: Unlimited team members
+- Enterprise plan: Unlimited + advanced admin controls
+
+### Can I integrate with other tools?
+Yes! We have integrations with Slack, Microsoft Teams, Google Workspace, Salesforce, and many more. Premium and Enterprise plans also include API access for custom integrations.
+
+## Security and Privacy
+
+### Is my data secure?
+Absolutely. We use bank-level encryption (AES-256) for data at rest and TLS 1.3 for data in transit. We're SOC 2 Type II and ISO 27001 certified.
+
+### Where is my data stored?
+Data is stored in secure data centers in the US, EU, and Asia-Pacific. Enterprise customers can choose their data region for compliance reasons.
+
+### Do you sell my data?
+Never. We do not sell, rent, or share your data with third parties for marketing purposes. Your data belongs to you.

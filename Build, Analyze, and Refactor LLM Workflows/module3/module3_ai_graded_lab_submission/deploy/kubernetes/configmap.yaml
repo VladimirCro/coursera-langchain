@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rag
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rag-config
+  namespace: rag
+data:
+  REDIS_HOST: "redis.rag.svc.cluster.local"
+  REDIS_PORT: "6379"
+  MODEL_NAME: "gpt-4-turbo"
+  CHUNK_SIZE: "1000"
+  CHUNK_OVERLAP: "200"
+  TOP_K: "3"
+  LRU_SIZE: "256"
+  CHROMA_DIR: "/app/chroma_db"
+  DOCS_DIR: "/app/docs"
+---
+# The real OPENAI_API_KEY must be provisioned out-of-band:
+#   kubectl -n rag create secret generic rag-secrets \
+#     --from-literal=OPENAI_API_KEY=sk-...
+# This stub is a placeholder manifest only — do NOT commit real keys.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rag-secrets
+  namespace: rag
+type: Opaque
+stringData:
+  OPENAI_API_KEY: "REPLACE_ME_WITH_sealed_secret_or_external_secrets_operator"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: chroma-pvc
+  namespace: rag
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard-rwx

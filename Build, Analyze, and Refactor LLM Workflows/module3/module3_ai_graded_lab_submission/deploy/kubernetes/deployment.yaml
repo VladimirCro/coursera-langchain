@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-service
+  namespace: rag
+  labels:
+    app: rag-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rag-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: rag-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: rag-service
+          image: globalai/rag-service:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rag-secrets
+                  key: OPENAI_API_KEY
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: REDIS_PORT
+            - name: MODEL_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: MODEL_NAME
+            - name: CHUNK_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: CHUNK_SIZE
+            - name: CHUNK_OVERLAP
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: CHUNK_OVERLAP
+            - name: TOP_K
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: TOP_K
+            - name: LRU_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: rag-config
+                  key: LRU_SIZE
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2000m"
+              memory: "2Gi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: chroma-data
+              mountPath: /app/chroma_db
+            - name: docs
+              mountPath: /app/docs
+              readOnly: true
+      volumes:
+        - name: chroma-data
+          persistentVolumeClaim:
+            claimName: chroma-pvc
+        - name: docs
+          configMap:
+            name: rag-docs

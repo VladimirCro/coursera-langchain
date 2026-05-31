@@ -1,0 +1,61 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rag-service
+  namespace: rag
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rag-service
+  minReplicas: 3
+  maxReplicas: 30
+  behavior:
+    scaleUp:
+      # Fast scale-up to absorb 10x business-hours spikes.
+      stabilizationWindowSeconds: 30
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+        - type: Pods
+          value: 4
+          periodSeconds: 30
+      selectPolicy: Max
+    scaleDown:
+      # Conservative scale-down to avoid flapping around spike tails.
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 25
+          periodSeconds: 60
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Pods
+      pods:
+        metric:
+          # Custom metric surfaced via prometheus-adapter.
+          # Scale when the 95th percentile latency exceeds 1.5s per pod.
+          name: rag_request_latency_p95_seconds
+        target:
+          type: AverageValue
+          averageValue: "1.5"
+    - type: Pods
+      pods:
+        metric:
+          # Requests per second per pod. Targets ~25 rps/pod at steady state.
+          name: rag_requests_per_second
+        target:
+          type: AverageValue
+          averageValue: "25"

@@ -1,0 +1,93 @@
+groups:
+  - name: rag-sla
+    interval: 30s
+    rules:
+      # ----- Latency SLO: p95 < 2s -----
+      - alert: RAGLatencyP95HighWarning
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (rate(rag_request_latency_seconds_bucket[5m]))
+          ) > 1.5
+        for: 5m
+        labels:
+          severity: warning
+          sla: latency
+        annotations:
+          summary: "RAG p95 latency above 1.5s for 5m"
+          description: "p95 is {{ $value | humanizeDuration }}. Hard SLA is 2s; triggering HPA scale-up."
+
+      - alert: RAGLatencyP95CriticalSLABreach
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (rate(rag_request_latency_seconds_bucket[5m]))
+          ) > 2.0
+        for: 10m
+        labels:
+          severity: critical
+          sla: latency
+        annotations:
+          summary: "SLA BREACH: RAG p95 > 2s for 10m"
+          description: "p95 is {{ $value | humanizeDuration }}. $100k/hr contractual penalty window active."
+
+      # ----- Error rate -----
+      - alert: RAGErrorRateHigh
+        expr: |
+          sum(rate(rag_requests_total{status="error"}[5m]))
+          / clamp_min(sum(rate(rag_requests_total[5m])), 1) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          sla: availability
+        annotations:
+          summary: "RAG error rate > 1%"
+          description: "Error ratio is {{ $value | humanizePercentage }}. Runbook: deliverable4_operational_runbook.md#error-rate-spike"
+
+      # ----- Cache effectiveness (cost leading indicator) -----
+      - alert: RAGCacheHitRateDrop
+        expr: rag_cache_hit_rate < 0.30
+        for: 15m
+        labels:
+          severity: warning
+          sla: cost
+        annotations:
+          summary: "Cache hit rate below 30% for 15m"
+          description: "Hit rate is {{ $value | humanizePercentage }}. Investigate Redis health, TTL, invalidation events."
+
+      # ----- Cost burn rate -----
+      - alert: RAGCostBurnRateHigh
+        expr: rate(rag_cost_usd_total[1h]) * 24 * 30 > 50000
+        for: 30m
+        labels:
+          severity: warning
+          sla: cost
+        annotations:
+          summary: "Projected monthly cost exceeds $50k"
+          description: "Current burn extrapolates to ${{ $value | humanize }}/month. Contract budget is $50k."
+
+      # ----- Availability SLO: 99.9% over 30d -----
+      - alert: RAGAvailabilitySLOBurn
+        expr: |
+          (1 - (
+            sum(rate(rag_requests_total{status="error"}[1h]))
+            / clamp_min(sum(rate(rag_requests_total[1h])), 1)
+          )) < 0.999
+        for: 1h
+        labels:
+          severity: critical
+          sla: availability
+        annotations:
+          summary: "1h availability below 99.9%"
+          description: "Burning error budget toward SLA miss."
+
+  - name: rag-infra
+    rules:
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis cache unreachable"
+          description: "Caching disabled. Expect 10x cost + latency until restored."

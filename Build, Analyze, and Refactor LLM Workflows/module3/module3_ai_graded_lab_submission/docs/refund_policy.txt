@@ -1,0 +1,50 @@
+# Refund and Money-Back Policy
+
+## 30-Day Money-Back Guarantee
+
+We offer a full refund within 30 days of your purchase if you're not completely satisfied with our service.
+
+## Eligibility
+
+### Who Qualifies
+- All new customers on any paid plan
+- Applies to first 30 days from subscription start date
+- Available for monthly and annual subscriptions
+- No questions asked - we want you to be happy
+
+### Who Does NOT Qualify
+- Free trial users (no payment made)
+- Customers who have already received a refund in the past
+- Renewals after the initial subscription period
+- Add-on purchases made after 30 days
+
+## Refund Process
+
+### How to Request
+1. Contact our support team at support@company.com
+2. Provide your account email and reason for refund (optional)
+3. We process requests within 2 business days
+4. Refunds appear in your account within 5-10 business days
+
+### What Gets Refunded
+- Full subscription amount paid
+- Any unused add-on purchases made with the subscription
+- Pro-rated refunds not available (full 30-day period only)
+
+## Important Notes
+
+### Data Retention
+- Account data is retained for 30 days after refund
+- You can re-subscribe within 30 days without data loss
+- After 30 days, all data is permanently deleted
+
+### Limitations
+- Only one refund per customer per year
+- Refund does not apply to third-party integrations
+- Services used extensively may be reviewed (abuse prevention)
+
+## Contact Us
+For refund requests or questions:
+- Email: support@company.com
+- Live Chat: Available Mon-Fri 9am-5pm EST
+- Phone: 1-800-REFUNDS (available for urgent matters)
